@@ -1,16 +1,30 @@
-# React + Vite
+# FEMO Stats
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Occupational health analytics tool for Ecuador's official FEMO form (Formulario de Evaluación Médica Ocupacional, MSP).
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Occupational physicians and workplace health officers deal with a fragmented process: each worker evaluation is filled out in an individual Excel file, printed, signed, and filed — leaving no consolidated view of the workforce's health status over time.
 
-## React Compiler
+FEMO Stats solves this by letting the physician upload each FEMO file directly into the platform. The tool extracts the structured data automatically and builds a real-time dashboard showing the health profile of the entire workforce per company.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Who it's for
 
-## Expanding the ESLint configuration
+- Occupational physicians managing health evaluations across one or more companies
+- Workplace health and safety officers (SST) responsible for reporting and planning
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## What you can see
+
+- **Fitness for work** — distribution of fit, restricted, and unfit results by job position
+- **Anthropometric profile** — BMI classification across the workforce, blood pressure levels
+- **Occupational risk exposure** — most common risk factors by frequency across all workers
+- **Lifestyle indicators** — smoking prevalence
+- **Worker registry** — full list of evaluated workers with exam count per person
+
+## Data privacy
+
+This tool stores health data classified as sensitive under Ecuador's LOPDP (Art. 4). The physician using the platform acts as the data controller; the platform operator acts as the data processor. A data processing agreement between both parties is required before loading real worker data.
+
+## Stack
+
+React · Supabase · Netlify
