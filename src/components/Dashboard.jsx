@@ -78,25 +78,25 @@ export default function Dashboard({ session }) {
     if (n === 0) return null;
 
     const withExam = workers.filter((w) => w.latestExam);
-    const fit = withExam.filter((w) => w.latestExam.aptitud === "Fit").length;
+    const fit = withExam.filter((w) => w.latestExam.fitness === "Fit").length;
 
     const bmiCounts = {};
     let overweightOrObese = 0;
     withExam.forEach((w) => {
-      const cat = classifyBMI(w.latestExam.imc);
+      const cat = classifyBMI(w.latestExam.bmi);
       bmiCounts[cat] = (bmiCounts[cat] || 0) + 1;
       if (cat === "Overweight" || cat.startsWith("Obesity")) overweightOrObese++;
     });
 
     const bpCounts = {};
     withExam.forEach((w) => {
-      const cat = classifyBP(w.latestExam.presion_arterial);
+      const cat = classifyBP(w.latestExam.blood_pressure);
       bpCounts[cat] = (bpCounts[cat] || 0) + 1;
     });
 
     const smokerCounts = {};
     withExam.forEach((w) => {
-      smokerCounts[w.latestExam.fumador] = (smokerCounts[w.latestExam.fumador] || 0) + 1;
+      smokerCounts[w.latestExam.smoker] = (smokerCounts[w.latestExam.smoker] || 0) + 1;
     });
 
     const riskFreq = {};
@@ -115,7 +115,7 @@ export default function Dashboard({ session }) {
       const p = w.position || "Unspecified";
       if (!byPosition[p]) byPosition[p] = { total: 0, fit: 0, restricted: 0, unfit: 0 };
       byPosition[p].total++;
-      const f = w.latestExam?.aptitud;
+      const f = w.latestExam?.fitness;
       if (f === "Fit") byPosition[p].fit++;
       else if (f === "Fit with restrictions") byPosition[p].restricted++;
       else if (f === "Unfit") byPosition[p].unfit++;
@@ -155,7 +155,7 @@ export default function Dashboard({ session }) {
             style={{ padding: "8px 10px", fontSize: 14, borderRadius: 8, border: "1px solid #ccc" }}
           >
             {companies.length === 0 && <option value="">No companies yet</option>}
-            {companies.map((c) => <option key={c.id} value={c.id}>{c.razon_social}</option>)}
+            {companies.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
         )}
         <button onClick={() => setShowCompanyForm((v) => !v)} style={{ fontSize: 13, padding: "8px 10px", borderRadius: 8, border: "1px solid #ccc", background: "#fff", cursor: "pointer" }}>
@@ -182,7 +182,7 @@ export default function Dashboard({ session }) {
           <input type="file" id="femo-upload" accept=".xls,.xlsx" style={{ display: "none" }}
             onChange={(e) => e.target.files[0] && handleFile(e.target.files[0])} />
           <label htmlFor="femo-upload" style={{ cursor: "pointer", fontSize: 14, fontWeight: 500 }}>
-            {parsing ? "Processing file…" : `Upload FEMO (.xls) — ${selectedCompany.razon_social}`}
+            {parsing ? "Processing file…" : `Upload FEMO (.xls) — ${selectedCompany.name}`}
           </label>
         </div>
       )}
